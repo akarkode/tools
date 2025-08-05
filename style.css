@@ -1,0 +1,152 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body, html {
+  height: 100%;
+  background-color: #DDE6ED;
+}
+
+.container {
+  display: flex;
+  height: 100vh;
+}
+
+.sidebar {
+  width: 220px;
+  background-color: #27374D;
+  color: white;
+  padding: 20px;
+}
+
+.sidebar h2 {
+  margin-bottom: 20px;
+  font-size: 20px;
+}
+
+.sidebar ul {
+  list-style: none;
+}
+
+.sidebar li {
+  padding: 12px;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: background 0.3s ease;
+}
+
+.sidebar li:hover,
+.sidebar li.active {
+  background-color: #526D82;
+}
+
+.main {
+  flex: 1;
+  background-color: #DDE6ED;
+  padding: 20px;
+  overflow-y: auto;
+}
+
+.tool-section {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.tool-header,
+.tool-footer {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.tool-body {
+  display: flex;
+  gap: 10px;
+  flex-direction: row;
+  height: auto;
+}
+
+textarea {
+  flex: 1;
+  padding: 12px;
+  font-size: 14px;
+  border: 1px solid #9DB2BF;
+  resize: none;
+  border-radius: 6px;
+  background-color: white;
+  transition: height 0.2s ease;
+  overflow-y: hidden;
+  min-height: 100px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+.btn {
+  padding: 10px 18px;
+  background-color: #526D82;
+  border: none;
+  color: white;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.3s, box-shadow 0.3s;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.btn:hover {
+  background-color: #3f556b;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.hidden {
+  display: none;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .container {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+
+  .tool-body {
+    flex-direction: column;
+  }
+}
+
+.welcome-banner {
+  background-color: #27374D;
+  color: #DDE6ED;
+  padding: 15px 25px;
+  text-align: center;
+  font-size: 16px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  border-bottom: 1px solid #526D82;
+}
+
+.welcome-banner strong {
+  color: #9DB2BF;
+}
+
+.tool-footer {
+  position: sticky;
+  bottom: 0;
+  background-color: #DDE6ED;
+  padding: 12px;
+  border-top: 1px solid #ccc;
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  z-index: 10;
+}
+
+.tool-body {
+  padding-bottom: 80px;
+}

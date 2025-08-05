@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tools🚀</title>
+  <link rel="icon" type="image/png" href="favicon.png">
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .welcome-screen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-color: #DDE6ED;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      z-index: 9999;
+    }
+
+    .welcome-message {
+      text-align: center;
+      padding: 30px;
+    }
+
+    .welcome-message h1 {
+      font-size: 2em;
+      margin-bottom: 10px;
+      color: #27374D;
+    }
+
+    .welcome-message p {
+      font-size: 1.1em;
+      color: #526D82;
+      margin-bottom: 20px;
+    }
+
+    .btn {
+      background-color: #526D82;
+      color: white;
+      padding: 12px 24px;
+      font-size: 1rem;
+      border: none;
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .btn:hover {
+      background-color: #3f556b;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.2);
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    .active {
+      background-color: #526D82;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+  <div class="welcome-screen" id="welcome-screen">
+    <div class="welcome-message">
+      <h1>👋 Welcome to Akarkode Tools</h1>
+      <p>Clean JSON. Simple Base64. Built for developers. 🚀</p>
+      <button class="btn" onclick="enterTool()">Enter Tools</button>
+    </div>
+  </div>
+
+  <div class="container hidden" id="app-container">
+    <aside class="sidebar">
+      <h2>Tools</h2>
+      <ul>
+        <li id="menu-json">JSON</li>
+        <li id="menu-base64">Base64</li>
+      </ul>
+    </aside>
+    <main class="main">
+      <section id="json-section" class="tool-section hidden">
+        <div class="tool-header">
+          <button class="btn" onclick="pasteText('json-input')">Paste</button>
+        </div>
+        <div class="tool-body">
+          <textarea id="json-input" placeholder="Input JSON..."></textarea>
+          <textarea id="json-output" placeholder="Beautified JSON..." readonly></textarea>
+        </div>
+        <div class="tool-footer">
+          <button class="btn" onclick="beautifyJSON()">Beautify</button>
+          <button class="btn" onclick="copyText('json-input')">Copy Input</button>
+          <button class="btn" onclick="copyText('json-output')">Copy Output</button>
+          <button class="btn" onclick="exportToFile('json-output', 'json.json')">Export JSON</button>
+        </div>
+      </section>
+
+      <section id="base64-section" class="tool-section hidden">
+        <div class="tool-header">
+          <button class="btn" onclick="pasteText('base64-input')">Paste</button>
+        </div>
+        <div class="tool-body">
+          <textarea id="base64-input" placeholder="Enter text or Base64..."></textarea>
+          <textarea id="base64-output" placeholder="Output..." readonly></textarea>
+        </div>
+        <div class="tool-footer">
+          <button class="btn" onclick="encodeBase64()">Encode</button>
+          <button class="btn" onclick="decodeBase64()">Decode</button>
+          <button class="btn" onclick="copyText('base64-input')">Copy Input</button>
+          <button class="btn" onclick="copyText('base64-output')">Copy Output</button>
+          <button class="btn" onclick="exportToFile('base64-output', 'b64.txt')">Export TXT</button>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    function enterTool() {
+      document.getElementById('welcome-screen').classList.add('hidden');
+      document.getElementById('app-container').classList.remove('hidden');
+
+      // Show JSON section by default
+      document.getElementById('json-section').classList.remove('hidden');
+      document.getElementById('menu-json').classList.add('active');
+      document.getElementById('base64-section').classList.add('hidden');
+      document.getElementById('menu-base64').classList.remove('active');
+    }
+  </script>
+  <script src="script.js"></script>
+</body>
+</html>
