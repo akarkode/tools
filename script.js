@@ -466,4 +466,3 @@ $('btn-enter-pdf').addEventListener('click', () => enterToolSection('menu-pdf'))
 
 initSignaturePad();
 setPdfUiState(false);
-
