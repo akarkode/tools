@@ -106,7 +106,7 @@ function exportToFile(targetId, fallbackName) {
   // Generate random file name with timestamp
   const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
   const randomPart = Math.random().toString(36).substring(2, 8);
-  const filename = `${isJSON ? 'beautified' : 'output'}-${timestamp}-${randomPart}.${isJSON ? 'json' : 'txt'}`;
+  const filename = `${randomPart}-${timestamp}.${isJSON ? 'json' : 'txt'}`;
 
   let blob;
   try {
@@ -448,7 +448,11 @@ downloadPdfBtn.addEventListener('click', async () => {
   const blob = new Blob([signedBytes], { type: 'application/pdf' });
   const link = document.createElement('a');
   link.href = URL.createObjectURL(blob);
-  link.download = 'signed.pdf';
+
+  // Generate filename with random string and timestamp
+  const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
+  const randomPart = Math.random().toString(36).substring(2, 8);
+  link.download = `signed-${randomPart}-${timestamp}.pdf`;
   link.click();
   showToast('Signed PDF downloaded');
 });
@@ -463,6 +467,11 @@ function enterToolSection(toolId) {
 $('btn-enter-json').addEventListener('click', () => enterToolSection('menu-json'));
 $('btn-enter-base64').addEventListener('click', () => enterToolSection('menu-base64'));
 $('btn-enter-pdf').addEventListener('click', () => enterToolSection('menu-pdf'));
+
+// Sidebar toggle functionality
+$('sidebar-toggle').addEventListener('click', () => {
+  document.body.classList.toggle('sidebar-collapsed');
+});
 
 initSignaturePad();
 setPdfUiState(false);
