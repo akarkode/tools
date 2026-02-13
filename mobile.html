@@ -4,21 +4,19 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="Clean JSON and Base64 tools with a modern, accessible interface." />
-  <title>Tools🚀</title>
+  <title>Tools🚀 (Mobile)</title>
   <link rel="icon" type="image/png" href="favicon.png" />
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="mobile.css" />
   <script>
-    // Mobile detection and redirection
+    // Mobile detection and redirection for mobile.html
     (function() {
       const isMobile = /Mobi|Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
       const currentPath = window.location.pathname;
 
-      if (isMobile && currentPath !== '/mobile' && currentPath !== '/mobile/') {
-        window.location.href = '/mobile';
-      } else if (!isMobile && (currentPath === '/mobile' || currentPath === '/mobile/')) {
-        // Optional: Redirect mobile users back to main page if they somehow land on /mobile on desktop
-        // window.location.href = '/';
+      if (!isMobile && (currentPath === '/mobile' || currentPath === '/mobile/')) { // If desktop user on /mobile, redirect to /
+        window.location.href = '/';
       }
+      // If mobile user on /mobile, do nothing (stay here)
     })();
   </script>
 </head>
@@ -36,26 +34,16 @@
     </div>
   </div>
 
-  <div class="container hidden" id="app-container">
+  <div class="mobile-app-container" id="app-container"> <!-- Changed container class -->
     <div class="mobile-header">
-      <button id="sidebar-toggle" class="btn ghost" aria-label="Toggle sidebar">
-        <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
-          <polyline points="9 18 15 12 9 6"></polyline>
-        </svg>
-      </button>
       <h2 class="mobile-header-title">Tools</h2>
     </div>
-    <aside class="sidebar" aria-label="Tool navigation">
-      <div class="sidebar-header">
-        <h2>Tools</h2>
-        <!-- Old sidebar toggle removed from here -->
-      </div>
-      <nav class="tool-nav" role="tablist" aria-label="Tool selector">
-        <button class="tool-tab" id="menu-json" role="tab" aria-selected="false" aria-controls="json-section" type="button">JSON</button>
-        <button class="tool-tab" id="menu-base64" role="tab" aria-selected="false" aria-controls="base64-section" type="button">Base64</button>
-        <button class="tool-tab" id="menu-pdf" role="tab" aria-selected="false" aria-controls="pdf-section" type="button">PDF Sign</button>
-      </nav>
-    </aside>
+
+    <nav class="tool-nav" role="tablist" aria-label="Tool selector">
+      <button class="tool-tab" id="menu-json" role="tab" aria-selected="false" aria-controls="json-section" type="button">JSON</button>
+      <button class="tool-tab" id="menu-base64" role="tab" aria-selected="false" aria-controls="base64-section" type="button">Base64</button>
+      <button class="tool-tab" id="menu-pdf" role="tab" aria-selected="false" aria-controls="pdf-section" type="button">PDF Sign</button>
+    </nav>
 
     <main class="main" id="main">
       <section id="json-section" class="tool-section hidden" role="tabpanel" aria-labelledby="menu-json">
