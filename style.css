@@ -586,7 +586,7 @@ textarea:focus-visible {
     box-shadow: 0 12px 30px rgba(79, 70, 229, 0.3);
   }
   50% {
-    transform: scale(1.02);
+    transform: 1.02;
     box-shadow: 0 16px 40px rgba(79, 70, 229, 0.45);
   }
   100% {
@@ -595,105 +595,98 @@ textarea:focus-visible {
   }
 }
 
-/* Sidebar Collapse Styles */
-body.sidebar-collapsed .container {
-  grid-template-columns: 60px 1fr; /* Narrow sidebar */
-}
-
-body.sidebar-collapsed .sidebar {
-  padding-left: 0;
-  padding-right: 0;
-  align-items: center; /* Center items when collapsed */
-  text-align: center;
-}
-
-body.sidebar-collapsed .sidebar-header {
-  justify-content: center; /* Center toggle button */
-}
-
-body.sidebar-collapsed .sidebar-header h2 {
-  display: none; /* Hide title */
-}
-
-body.sidebar-collapsed #sidebar-toggle svg {
-  transform: rotate(-180deg); /* Rotate to point left when collapsed */
-}
-
-body.sidebar-collapsed .tool-nav {
-  display: none; /* Hide navigation completely when collapsed on desktop */
-}
-
-/* This is a placeholder for actual icons if they were used.
-   Since the current tool-tabs are text-based, we'll try to
-   visually represent them using their text for now.
-   A better solution would be to add actual icons to each tool-tab.
-*/
-body.sidebar-collapsed #menu-json { /* Special handling for collapsed tabs */
-  padding: 10px 0; /* Adjust padding for icon-only */
-  justify-content: center; /* Center icon */
-  font-size: 0; /* Hide text */
-  width: 100%; /* Full width for the narrow sidebar */
-  text-align: center;
-  position: relative;
-}
-body.sidebar-collapsed #menu-json::before {
-  content: 'JSON'; /* Use text as pseudo-icon */
-  font-size: 0.8rem;
-  display: block;
-}
-
-body.sidebar-collapsed #menu-base64 {
-  padding: 10px 0;
-  justify-content: center;
-  font-size: 0;
-  width: 100%;
-  text-align: center;
-  position: relative;
-}
-body.sidebar-collapsed #menu-base64::before {
-  content: 'B64';
-  font-size: 0.8rem;
-  display: block;
-}
-
-body.sidebar-collapsed #menu-pdf {
-  padding: 10px 0;
-  justify-content: center;
-  font-size: 0;
-  width: 100%;
-  text-align: center;
-  position: relative;
-}
-body.sidebar-collapsed #menu-pdf::before {
-  content: 'PDF';
-  font-size: 0.8rem;
-  display: block;
-}
-
 @media (max-width: 960px) {
   .container {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr; /* Full width for main content on mobile */
   }
 
-  .sidebar {
-    border-right: none;
-    border-bottom: 1px solid var(--border);
-    grid-template-columns: 1fr auto;
+  /* Mobile Header - Visible only on mobile */
+  .mobile-header {
+    display: flex;
     align-items: center;
-    padding: calc(var(--spacing-unit) * 2) calc(var(--spacing-unit) * 3); /* Use spacing unit */
+    justify-content: space-between;
+    padding: var(--spacing-unit) calc(var(--spacing-unit) * 2);
+    background: var(--panel);
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    z-index: 50;
+  }
+  .mobile-header .mobile-header-title {
+    font-size: 1.2rem;
+    color: var(--text);
+    font-weight: 600;
+  }
+  .mobile-header #sidebar-toggle {
+    transform: rotate(180deg); /* Arrow points right when sidebar is closed */
   }
 
-  .tool-nav {
-    grid-auto-flow: column;
-    grid-auto-columns: minmax(110px, auto);
-    justify-content: end;
+  /* Sidebar for mobile - Overlay behavior */
+  .sidebar {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: -250px; /* Hidden by default */
+    width: 250px;
+    z-index: 1000;
+    transform: translateX(0); /* Initial state for transition */
+    transition: transform var(--transition) ease-out; /* Smooth slide-in/out */
+    box-shadow: 0 0 20px rgba(0,0,0,0.2); /* Shadow for overlay */
+    padding-top: calc(var(--spacing-unit) * 2); /* Adjust padding from top */
+    padding-bottom: calc(var(--spacing-unit) * 2);
+  }
+
+  /* Show sidebar when body has sidebar-open class */
+  body.sidebar-open .sidebar {
+    transform: translateX(250px); /* Slide into view */
+  }
+
+  /* Overlay for main content when sidebar is open */
+  body.sidebar-open::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.5); /* Dim overlay */
+    z-index: 999;
+    transition: opacity var(--transition);
+    opacity: 1;
+  }
+  body:not(.sidebar-open)::before {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  /* Hide desktop sidebar header toggle */
+  .sidebar-header #sidebar-toggle {
+    display: none;
   }
 
   .main {
     padding: calc(var(--spacing-unit) * 3); /* Use spacing unit */
   }
 
+  /* Adjustments for tool-nav in mobile sidebar */
+  .sidebar .tool-nav {
+    display: grid; /* Revert to grid for vertical stacking in overlay */
+    grid-auto-flow: row; /* Stack vertically in overlay */
+    gap: 6px;
+  }
+  .sidebar .tool-nav .tool-tab {
+    text-align: left;
+    justify-content: start;
+    padding-left: calc(var(--spacing-unit) * 2); /* Indent tabs */
+  }
+}
 
+@media (min-width: 961px) {
+  /* Hide mobile header and toggle on desktop */
+  .mobile-header {
+    display: none;
+  }
+  /* Show desktop sidebar toggle */
+  .sidebar-header #sidebar-toggle {
+    display: block;
+  }
 }
 
 @media (min-width: 1024px) {

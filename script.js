@@ -145,6 +145,17 @@ function setActiveTool(activeId) {
 
   const isJson = activeId === 'menu-json';
   const isPdf = activeId === 'menu-pdf';
+
+  // Close sidebar if open (for mobile)
+  if (document.body.classList.contains('sidebar-open')) {
+    document.body.classList.remove('sidebar-open');
+    // Reset arrow rotation if it's the mobile toggle
+    const mobileToggle = document.querySelector('.mobile-header #sidebar-toggle');
+    if (mobileToggle) {
+      mobileToggle.querySelector('svg').style.transform = 'rotate(0deg)';
+    }
+  }
+
   jsonSection.classList.toggle('hidden', !isJson);
   base64Section.classList.toggle('hidden', isJson || isPdf);
   pdfSection.classList.toggle('hidden', !isPdf);
@@ -470,8 +481,15 @@ $('btn-enter-pdf').addEventListener('click', () => enterToolSection('menu-pdf'))
 
 // Sidebar toggle functionality
 $('sidebar-toggle').addEventListener('click', () => {
-  document.body.classList.toggle('sidebar-collapsed');
+  document.body.classList.toggle('sidebar-open');
+  const toggleBtn = $('sidebar-toggle');
+  if (document.body.classList.contains('sidebar-open')) {
+    toggleBtn.querySelector('svg').style.transform = 'rotate(-180deg)'; // Arrow points left when sidebar is open
+  } else {
+    toggleBtn.querySelector('svg').style.transform = 'rotate(0deg)'; // Arrow points right when sidebar is closed
+  }
 });
+
 
 initSignaturePad();
 setPdfUiState(false);
