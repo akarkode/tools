@@ -2,6 +2,27 @@ function $(id) {
   return document.getElementById(id);
 }
 
+const toast = $('toast');
+let toastTimer;
+
+function showToast(message) {
+  if (!toast) return;
+  toast.textContent = message;
+  toast.hidden = false;
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => {
+    toast.hidden = true;
+  }, 1600);
+}
+
+function toBase64(text) {
+  return btoa(unescape(encodeURIComponent(text)));
+}
+
+function fromBase64(text) {
+  return decodeURIComponent(escape(atob(text)));
+}
+
 function beautifyJSON() {
   try {
     let raw = $('json-input').value
@@ -17,10 +38,9 @@ function beautifyJSON() {
   autoResize($('json-output'));
 }
 
-
 function decodeBase64() {
   try {
-    $('base64-output').value = atob($('base64-input').value);
+    $('base64-output').value = fromBase64($('base64-input').value);
   } catch {
     $('base64-output').value = 'Invalid Base64!';
   }
@@ -28,20 +48,39 @@ function decodeBase64() {
 }
 
 function encodeBase64() {
-  $('base64-output').value = btoa($('base64-input').value);
+  try {
+    $('base64-output').value = toBase64($('base64-input').value);
+  } catch {
+    $('base64-output').value = 'Invalid Base64!';
+  }
   autoResize($('base64-output'));
 }
-
 
 function pasteText(targetId) {
   navigator.clipboard.readText().then(text => {
     $(targetId).value = text;
     autoResize($(targetId));
+    showToast('Pasted');
+  }).catch(() => {
+    showToast('Clipboard access denied');
   });
 }
 
-function copyText(targetId) {
-  navigator.clipboard.writeText($(targetId).value);
+function copyText(targetId, triggerBtn) {
+  navigator.clipboard.writeText($(targetId).value).then(() => {
+    if (triggerBtn) {
+      const label = triggerBtn.querySelector('.btn-label');
+      triggerBtn.classList.add('copied');
+      if (label) label.textContent = 'Copied';
+      setTimeout(() => {
+        triggerBtn.classList.remove('copied');
+        if (label) label.textContent = 'Copy';
+      }, 1200);
+    }
+    showToast('Copied');
+  }).catch(() => {
+    showToast('Copy failed');
+  });
 }
 
 function exportToFile(targetId, fallbackName) {
@@ -71,32 +110,38 @@ function exportToFile(targetId, fallbackName) {
 
 function autoResize(textarea) {
   textarea.style.height = 'auto';
-  textarea.style.height = (textarea.scrollHeight) + 'px';
+  textarea.style.height = textarea.scrollHeight + 'px';
 }
 
 // Attach auto-resize to all textareas
-document.querySelectorAll('textarea').forEach((ta) => {
+Array.from(document.querySelectorAll('textarea')).forEach((ta) => {
   ta.addEventListener('input', () => autoResize(ta));
   autoResize(ta);
 });
 
+function setActiveTool(activeId) {
+  const jsonTab = $('menu-json');
+  const base64Tab = $('menu-base64');
+  const jsonSection = $('json-section');
+  const base64Section = $('base64-section');
+
+  const isJson = activeId === 'menu-json';
+  jsonSection.classList.toggle('hidden', !isJson);
+  base64Section.classList.toggle('hidden', isJson);
+
+  jsonTab.classList.toggle('active', isJson);
+  base64Tab.classList.toggle('active', !isJson);
+  jsonTab.setAttribute('aria-selected', String(isJson));
+  base64Tab.setAttribute('aria-selected', String(!isJson));
+}
+
 // Menu toggle
-$('menu-json').addEventListener('click', () => {
-  $('json-section').classList.remove('hidden');
-  $('base64-section').classList.add('hidden');
-  $('menu-json').classList.add('active');
-  $('menu-base64').classList.remove('active');
-});
+$('menu-json').addEventListener('click', () => setActiveTool('menu-json'));
+$('menu-base64').addEventListener('click', () => setActiveTool('menu-base64'));
 
-$('menu-base64').addEventListener('click', () => {
-  $('base64-section').classList.remove('hidden');
-  $('json-section').classList.add('hidden');
-  $('menu-base64').classList.add('active');
-  $('menu-json').classList.remove('active');
+Array.from(document.querySelectorAll('[data-copy-target]')).forEach((btn) => {
+  btn.addEventListener('click', () => {
+    const target = btn.getAttribute('data-copy-target');
+    if (target) copyText(target, btn);
+  });
 });
-
-// === Obfuscation-like wrapper for encodeBase64 ===
-(function () {
-  const b64 = 'ZnVuY3Rpb24gZW5jb2RlQmFzZTY0KCkgeyBjb25zdCB0ZXh0ID0gJChcImJhc2U2NC1pbnB1dFwiKS52YWx1ZTsgJChcImJhc2U2NC1vdXRwdXRcIikudmFsdWUgPSBidG9hKHRleHQpOyB9';
-  window.encodeBase64 = new Function('return ' + atob(b64))();
-})();
