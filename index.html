@@ -14,8 +14,11 @@
   <div class="welcome-screen" id="welcome-screen" aria-labelledby="welcome-title" role="dialog" aria-modal="true">
     <div class="welcome-message">
       <h1 id="welcome-title">👋 Welcome to Akarkode Tools</h1>
-      <p>Clean JSON. Simple Base64. Built for developers. 🚀</p>
-      <button class="btn" type="button" onclick="enterTool()">Enter Tools</button>
+      <div class="welcome-actions">
+        <button class="btn" type="button" id="btn-enter-json">JSON</button>
+        <button class="btn" type="button" id="btn-enter-base64">Base64</button>
+        <button class="btn" type="button" id="btn-enter-pdf">PDF Sign</button>
+      </div>
     </div>
   </div>
 
@@ -27,6 +30,7 @@
       <nav class="tool-nav" role="tablist" aria-label="Tool selector">
         <button class="tool-tab" id="menu-json" role="tab" aria-selected="false" aria-controls="json-section" type="button">JSON</button>
         <button class="tool-tab" id="menu-base64" role="tab" aria-selected="false" aria-controls="base64-section" type="button">Base64</button>
+        <button class="tool-tab" id="menu-pdf" role="tab" aria-selected="false" aria-controls="pdf-section" type="button">PDF Sign</button>
       </nav>
     </aside>
 
@@ -141,25 +145,55 @@
           <button class="btn subtle" type="button" onclick="exportToFile('base64-output', 'b64.txt')">Export TXT</button>
         </div>
       </section>
+
+      <section id="pdf-section" class="tool-section hidden" role="tabpanel" aria-labelledby="menu-pdf">
+        <header class="tool-header">
+          <h3>PDF Signature</h3>
+        </header>
+        <div class="pdf-grid">
+          <div class="pdf-panel">
+            <div class="field-header">
+              <span>PDF File</span>
+            </div>
+            <input class="file-input" id="pdf-file" type="file" accept="application/pdf" aria-label="Choose PDF file" />
+            <div class="pdf-viewer" id="pdf-viewer" aria-live="polite">
+              <div class="pdf-empty" id="pdf-empty">Load a PDF to preview here.</div>
+              <canvas id="pdf-canvas" aria-label="PDF preview"></canvas>
+              <div class="signature-layer" id="signature-layer" aria-hidden="true"></div>
+            </div>
+            <p class="helper-text">Only PDF files are supported. Everything stays in your browser.</p>
+            <div class="pdf-nav-controls">
+              <button class="btn ghost" type="button" id="prev-page">Prev</button>
+              <span class="page-indicator" id="page-indicator">Page 0 / 0</span>
+              <button class="btn ghost" type="button" id="next-page">Next</button>
+            </div>
+          </div>
+          <div class="pdf-panel">
+            <div class="field-header">
+              <span>Signature</span>
+              <div class="field-actions">
+                <button class="copy-btn paste-btn" type="button" id="clear-signature">Clear</button>
+                <button class="copy-btn" type="button" id="place-signature">Place</button>
+              </div>
+            </div>
+            <div class="signature-pad">
+              <canvas id="signature-canvas" width="420" height="200" aria-label="Signature pad"></canvas>
+            </div>
+            <p class="helper-text">Draw your signature above, then click “Place” to drop it on the PDF.</p>
+            <div class="tool-footer">
+              <button class="btn" type="button" id="download-pdf">Download Signed PDF</button>
+            </div>
+          </div>
+        </div>
+      </section>
     </main>
   </div>
 
   <p class="toast" id="toast" role="status" aria-live="polite" hidden></p>
 
-  <script>
-    function enterTool() {
-      document.getElementById('welcome-screen').classList.add('hidden');
-      document.getElementById('app-container').classList.remove('hidden');
 
-      // Show JSON section by default
-      document.getElementById('json-section').classList.remove('hidden');
-      document.getElementById('menu-json').classList.add('active');
-      document.getElementById('menu-json').setAttribute('aria-selected', 'true');
-      document.getElementById('base64-section').classList.add('hidden');
-      document.getElementById('menu-base64').classList.remove('active');
-      document.getElementById('menu-base64').setAttribute('aria-selected', 'false');
-    }
-  </script>
+  <script src="vendor/pdf.min.js"></script>
+  <script src="vendor/pdf-lib.min.js"></script>
   <script src="script.js"></script>
 </body>
 </html>

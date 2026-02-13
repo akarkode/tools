@@ -1,18 +1,21 @@
+@import url('https://rsms.me/inter/inter.css');
+
 :root {
   color-scheme: light;
-  --bg: #f4f6fb;
+  --bg: #f8fafc; /* Lighter background */
   --panel: #ffffff;
-  --panel-muted: #f1f3f9;
-  --text: #111827;
-  --text-muted: #4b5563;
-  --border: rgba(17, 24, 39, 0.12);
-  --primary: #1f6feb;
-  --primary-strong: #1a56c5;
+  --panel-muted: #f1f5f9; /* Slightly adjusted muted panel */
+  --text: #1e293b; /* Darker, crisper text */
+  --text-muted: #64748b; /* Softer muted text */
+  --border: rgba(100, 116, 139, 0.2); /* Softer border */
+  --primary: #4f46e5; /* A more vibrant primary blue-violet */
+  --primary-strong: #4338ca;
   --accent: #0ea5e9;
-  --shadow: 0 18px 40px rgba(15, 23, 42, 0.12);
-  --radius: 16px;
-  --radius-sm: 10px;
-  --transition: 180ms ease;
+  --shadow: 0 10px 30px rgba(30, 41, 59, 0.08); /* Lighter, broader shadow */
+  --radius: 12px; /* Slightly smaller, more consistent radius */
+  --radius-sm: 8px;
+  --spacing-unit: 8px; /* New: Define a base spacing unit */
+  --transition: 200ms ease-out; /* Slightly longer, smoother transition */
 }
 
 * {
@@ -31,8 +34,8 @@ html {
 }
 
 body {
-  font-family: "Segoe UI", "Segoe UI Variable", "Inter", system-ui, -apple-system, sans-serif;
-  background: radial-gradient(circle at top, rgba(31, 111, 235, 0.12), transparent 45%),
+  font-family: "Inter", system-ui, -apple-system, sans-serif;
+  background: radial-gradient(circle at top, rgba(79, 70, 229, 0.08), transparent 45%), /* Using primary color for subtle gradient */
     var(--bg);
   color: var(--text);
   line-height: 1.6;
@@ -66,39 +69,41 @@ textarea {
 
 .container {
   display: grid;
-  grid-template-columns: clamp(180px, 20vw, 220px) 1fr;
+  grid-template-columns: clamp(180px, 20vw, 240px) 1fr; /* Slightly wider sidebar */
   min-height: 100vh;
 }
 
 .sidebar {
   background: var(--panel);
   border-right: 1px solid var(--border);
-  padding: 20px 16px;
+  padding: 24px 16px; /* Increased vertical padding */
   display: grid;
-  gap: 16px;
+  gap: var(--spacing-unit); /* Using spacing unit */
   align-content: start;
-  box-shadow: inset -1px 0 0 rgba(17, 24, 39, 0.04);
+  box-shadow: inset -1px 0 0 rgba(17, 24, 39, 0.02); /* Softer inner shadow */
 }
 
 .sidebar-header h2 {
-  font-size: 1.1rem;
+  font-size: 1.15rem; /* Slightly larger heading */
   color: var(--text);
+  margin-bottom: var(--spacing-unit); /* Add margin below header */
 }
 
 .tool-nav {
   display: grid;
-  gap: 8px;
+  gap: 6px; /* Slightly smaller gap between tabs */
 }
 
 .tool-tab {
   background: transparent;
   border: 1px solid transparent;
-  padding: 8px 10px;
-  border-radius: 12px;
+  padding: 10px 14px; /* More padding for better click area */
+  border-radius: var(--radius-sm); /* Using radius-sm */
   text-align: left;
   color: var(--text-muted);
   cursor: pointer;
   transition: background var(--transition), color var(--transition), border var(--transition);
+  font-weight: 500; /* Slightly bolder default */
 }
 
 .tool-tab:hover,
@@ -108,48 +113,75 @@ textarea {
 }
 
 .tool-tab.active {
-  background: rgba(31, 111, 235, 0.12);
-  border-color: rgba(31, 111, 235, 0.2);
-  color: var(--text);
+  background: rgba(79, 70, 229, 0.1); /* Lighter primary background */
+  border-color: rgba(79, 70, 229, 0.2); /* Matching border color */
+  color: var(--primary-strong); /* Primary color for active text */
   font-weight: 600;
 }
 
 .main {
-  padding: 32px 40px;
+  padding: 40px; /* Increased padding for main content */
   overflow-y: auto;
 }
 
 .tool-section {
   display: grid;
-  gap: 18px;
-  animation: fadeIn 240ms ease;
+  gap: 24px; /* Increased gap for sections */
+  animation: fadeIn var(--transition); /* Using custom transition variable */
 }
 
 .tool-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 16px;
+  gap: var(--spacing-unit);
+  padding-bottom: 8px; /* Add slight padding bottom */
+  border-bottom: 1px solid var(--border); /* Subtle separator */
 }
 
 .tool-header h3 {
-  font-size: 1.2rem;
+  font-size: 1.4rem; /* Larger heading for tool titles */
+  color: var(--text);
+  font-weight: 600;
 }
 
 .tool-actions {
   display: flex;
-  gap: 10px;
+  gap: var(--spacing-unit);
 }
+
+.page-indicator {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  align-self: center;
+}
+
+.pdf-nav-controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: var(--spacing-unit);
+  margin-top: var(--spacing-unit);
+  padding: var(--spacing-unit) 0; /* Add padding for visual separation */
+  border-top: 1px solid var(--border); /* Subtle separator */
+}
+
+.pdf-nav-controls .btn.ghost {
+  padding: 8px 14px; /* Maintain consistent button size */
+  border-radius: var(--radius-sm);
+  font-size: 0.9rem;
+}
+
 
 .tool-body {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 16px;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Adjusted minmax for better layout */
+  gap: calc(var(--spacing-unit) * 2); /* More spacing in tool body */
 }
 
 .field {
   display: grid;
-  gap: 8px;
+  gap: var(--spacing-unit);
 }
 
 .field-header {
@@ -157,23 +189,25 @@ textarea {
   align-items: center;
   justify-content: space-between;
   color: var(--text-muted);
-  font-size: 0.9rem;
+  font-size: 0.85rem; /* Slightly smaller for subtle hint */
+  font-weight: 500;
+  margin-bottom: 4px; /* Slight margin */
 }
 
 .field-actions {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: var(--spacing-unit);
 }
 
 .copy-btn {
   background: var(--panel-muted);
   border: 1px solid var(--border);
   color: var(--text);
-  padding: 6px 12px;
+  padding: 7px 14px; /* Adjusted padding */
   border-radius: 999px;
   cursor: pointer;
-  font-size: 0.85rem;
+  font-size: 0.8rem; /* Slightly smaller font */
   display: inline-flex;
   align-items: center;
   gap: 6px;
@@ -182,38 +216,44 @@ textarea {
 
 .copy-btn:hover,
 .copy-btn:focus-visible {
-  background: rgba(31, 111, 235, 0.12);
-  border-color: rgba(31, 111, 235, 0.2);
+  background: rgba(79, 70, 229, 0.1); /* Use primary color for hover */
+  border-color: rgba(79, 70, 229, 0.25);
   transform: translateY(-1px);
 }
 
 .copy-btn .btn-icon {
-  width: 14px;
-  height: 14px;
+  width: 13px; /* Slightly smaller icon */
+  height: 13px;
   display: inline-flex;
 }
 
 .copy-btn svg {
-  width: 14px;
-  height: 14px;
+  width: 13px;
+  height: 13px;
   fill: currentColor;
 }
 
 .paste-btn {
   background: transparent;
-  border-color: rgba(31, 111, 235, 0.35);
+  border-color: var(--primary); /* Primary color for border */
   color: var(--primary);
+  font-weight: 500;
 }
 
 .paste-btn:hover,
 .paste-btn:focus-visible {
-  background: rgba(31, 111, 235, 0.1);
+  background: rgba(79, 70, 229, 0.05); /* Very light primary background */
+  border-color: var(--primary-strong);
 }
 
 .copy-btn.copied {
   background: rgba(16, 185, 129, 0.18);
   border-color: rgba(16, 185, 129, 0.4);
   color: #065f46;
+}
+
+.copy-btn.flash {
+  box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.25);
 }
 
 textarea {
@@ -224,31 +264,156 @@ textarea {
   border-radius: var(--radius-sm);
   background: var(--panel);
   transition: border var(--transition), box-shadow var(--transition), background var(--transition);
-  min-height: 140px;
+  min-height: 160px; /* Slightly increased min-height */
   resize: vertical;
 }
 
 textarea:focus-visible {
   outline: none;
-  border-color: rgba(31, 111, 235, 0.5);
-  box-shadow: 0 0 0 3px rgba(31, 111, 235, 0.15);
+  border-color: var(--primary); /* Primary color for focus */
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15); /* Primary color for shadow */
+}
+
+.file-input {
+  width: 100%;
+  padding: 8px 12px; /* Adjusted padding */
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background: var(--panel);
+  color: var(--text-muted);
+}
+
+.file-input::file-selector-button {
+  margin-right: var(--spacing-unit);
+  border: 1px solid var(--border);
+  background: var(--panel-muted);
+  color: var(--text);
+  padding: 8px 14px;
+  border-radius: var(--radius-sm); /* Use radius-sm */
+  cursor: pointer;
+  transition: background var(--transition), border var(--transition), transform var(--transition);
+  font-weight: 500;
+}
+
+.file-input::file-selector-button:hover,
+.file-input::file-selector-button:focus-visible {
+  background: rgba(79, 70, 229, 0.1);
+  border-color: rgba(79, 70, 229, 0.2);
+  transform: translateY(-1px);
+}
+
+.helper-text {
+  color: var(--text-muted);
+  font-size: 0.85rem; /* Slightly smaller helper text */
+}
+
+.pdf-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Adjusted minmax for better PDF layout */
+  gap: calc(var(--spacing-unit) * 3); /* More gap for PDF section */
+}
+
+.pdf-panel {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: calc(var(--spacing-unit) * 2); /* Use spacing unit for padding */
+  display: grid;
+  gap: var(--spacing-unit);
+  box-shadow: var(--shadow); /* Use main shadow variable */
+}
+
+
+
+.pdf-viewer {
+  position: relative;
+  background: var(--panel-muted);
+  border-radius: var(--radius-sm);
+  border: 1px dashed var(--border);
+  max-height: 600px; /* Set a max-height to constrain the viewer */
+  overflow-y: auto; /* Enable vertical scrolling if content exceeds max-height */
+  display: grid;
+  place-items: center;
+  overflow-x: hidden; /* Hide horizontal overflow if any */
+}
+
+.pdf-empty {
+  position: absolute;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+.pdf-viewer canvas {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: var(--radius-sm); /* Rounded corners for canvas */
+}
+
+.signature-layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.signature-stamp {
+  position: absolute;
+  cursor: grab;
+  pointer-events: auto;
+  border-radius: 6px;
+  border: 1px solid rgba(79, 70, 229, 0.35); /* Use primary color */
+  background: rgba(255, 255, 255, 0.85); /* Slightly more opaque */
+  backdrop-filter: blur(4px); /* Stronger blur */
+  box-shadow: 0 8px 20px rgba(30, 41, 59, 0.1); /* Adjusted shadow */
+}
+
+.signature-stamp.dragging {
+  cursor: grabbing;
+  border-color: rgba(79, 70, 229, 0.6); /* Stronger primary border */
+}
+
+.signature-pad {
+  background: linear-gradient(180deg, rgba(30, 41, 59, 0.02), rgba(30, 41, 59, 0.0)); /* Darker gradient start */
+  border-radius: var(--radius-sm);
+  border: 1px dashed var(--border);
+  padding: calc(var(--spacing-unit) * 1.5); /* Adjusted padding */
+}
+
+.signature-pad canvas {
+  width: 100%;
+  height: 200px;
+  display: block;
+  touch-action: none; /* Prevent default touch gestures */
 }
 
 .btn {
-  padding: 10px 18px;
+  padding: 10px 20px; /* Slightly more horizontal padding */
   background: var(--primary);
   border: 1px solid transparent;
   color: #fff;
-  border-radius: 999px;
+  border-radius: 999px; /* Keep pill shape */
   cursor: pointer;
   transition: transform var(--transition), box-shadow var(--transition), background var(--transition);
-  box-shadow: 0 8px 20px rgba(31, 111, 235, 0.2);
+  box-shadow: 0 6px 16px rgba(79, 70, 229, 0.2); /* Softer shadow for primary */
+}
+
+.btn:disabled,
+.copy-btn:disabled,
+.file-label:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.btn.flash {
+  box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.3);
 }
 
 .btn:hover,
 .btn:focus-visible {
   background: var(--primary-strong);
   transform: translateY(-1px);
+  box-shadow: 0 8px 20px rgba(79, 70, 229, 0.25); /* Slightly more prominent on hover */
 }
 
 .btn.ghost {
@@ -271,14 +436,29 @@ textarea:focus-visible {
   box-shadow: none;
 }
 
+.btn.subtle:hover,
+.btn.subtle:focus-visible {
+  background: var(--panel-muted); /* No change on background for subtle */
+  border-color: var(--primary); /* Highlight border on hover */
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(30, 41, 59, 0.08); /* Subtle lift for subtle buttons */
+}
+
 .tool-footer {
   position: sticky;
   bottom: 0;
-  background: linear-gradient(180deg, rgba(244, 246, 251, 0), var(--bg) 55%);
-  padding: 12px 0 6px;
+  background: linear-gradient(180deg, rgba(248, 250, 252, 0), var(--bg) 55%); /* Adjusted gradient start color */
+  padding: var(--spacing-unit) 0; /* Use spacing unit for padding */
   display: flex;
-  gap: 10px;
+  gap: var(--spacing-unit);
   flex-wrap: wrap;
+  justify-content: flex-end; /* Align buttons to the right */
+}
+
+/* Specific styling for the PDF download button */
+#download-pdf {
+  padding: 8px 16px; /* Smaller padding for a more compact button */
+  font-size: 0.9rem; /* Slightly smaller text */
 }
 
 .hidden {
@@ -300,54 +480,74 @@ textarea:focus-visible {
 .welcome-screen {
   position: fixed;
   inset: 0;
-  background: var(--bg);
+  background: radial-gradient(circle at top, rgba(79, 70, 229, 0.25) 0%, transparent 70%), /* Stronger, more central gradient */
+              radial-gradient(circle at bottom right, rgba(0, 163, 255, 0.15) 0%, transparent 60%), /* Secondary accent gradient */
+              var(--bg);
   display: grid;
   place-items: center;
-  padding: 24px;
+  padding: calc(var(--spacing-unit) * 4);
   z-index: 9999;
+  animation: fadeIn 500ms ease forwards; /* Reuse fadeIn for screen entry */
 }
 
 .welcome-message {
   text-align: center;
-  background: var(--panel);
-  padding: 32px;
-  border-radius: var(--radius);
-  box-shadow: var(--shadow);
-  max-width: 460px;
+  background: rgba(255, 255, 255, 0.9); /* Slightly translucent white */
+  backdrop-filter: blur(8px); /* Frosted glass effect */
+  padding: calc(var(--spacing-unit) * 6); /* More generous padding */
+  border-radius: 24px; /* Larger border-radius for softer look */
+  box-shadow: 0 20px 50px rgba(30, 41, 59, 0.15), /* Enhanced shadow */
+              0 0 0 1px rgba(255, 255, 255, 0.2) inset; /* Subtle inner border */
+  max-width: 640px; /* Slightly wider welcome message */
+  transform: translateY(10px); /* Initial state for animation */
+  animation: slideUp 600ms cubic-bezier(0.2, 0.8, 0.2, 1) forwards; /* Custom slide-up animation */
+  animation-delay: 200ms;
+  opacity: 0;
 }
 
 .welcome-message h1 {
-  font-size: 2rem;
-  margin-bottom: 12px;
+  font-size: 3.2rem; /* Even larger, more impactful heading */
+  font-weight: 700; /* Bolder heading */
+  line-height: 1.1;
+  margin-bottom: calc(var(--spacing-unit) * 4); /* More margin */
+  color: var(--text);
+  letter-spacing: -0.03em; /* Tighter letter spacing */
 }
 
 .welcome-message p {
+  font-size: 1.25rem; /* Larger introductory text */
   color: var(--text-muted);
-  margin-bottom: 24px;
+  margin-bottom: calc(var(--spacing-unit) * 5); /* Increased margin */
+  line-height: 1.5;
 }
 
-.toast {
-  position: fixed;
-  left: 50%;
-  bottom: 24px;
-  transform: translateX(-50%);
-  background: var(--text);
-  color: #fff;
-  padding: 10px 16px;
-  border-radius: 999px;
-  box-shadow: var(--shadow);
-  font-size: 0.9rem;
+.welcome-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: calc(var(--spacing-unit) * 3); /* Increased space between buttons */
+  margin-top: calc(var(--spacing-unit) * 6); /* More space above buttons */
 }
 
-:focus-visible {
-  outline: 3px solid rgba(14, 165, 233, 0.4);
-  outline-offset: 3px;
+.welcome-actions .btn {
+  padding: 14px 32px; /* Larger buttons */
+  font-size: 1.2rem;
+  font-weight: 600;
+  box-shadow: 0 12px 30px rgba(79, 70, 229, 0.3); /* Stronger button shadow */
+  transition: transform var(--transition), box-shadow var(--transition), background var(--transition);
 }
 
-@keyframes fadeIn {
+.welcome-actions .btn:hover,
+.welcome-actions .btn:focus-visible {
+  box-shadow: 0 16px 40px rgba(79, 70, 229, 0.45); /* Even stronger on hover */
+  transform: translateY(-4px); /* More pronounced lift on hover */
+}
+
+/* New animations */
+@keyframes slideUp {
   from {
     opacity: 0;
-    transform: translateY(4px);
+    transform: translateY(20px);
   }
   to {
     opacity: 1;
@@ -355,55 +555,34 @@ textarea:focus-visible {
   }
 }
 
-@media (max-width: 960px) {
-  .container {
-    grid-template-columns: 1fr;
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 12px 30px rgba(79, 70, 229, 0.3);
   }
-
-  .sidebar {
-    border-right: none;
-    border-bottom: 1px solid var(--border);
-    grid-template-columns: 1fr auto;
-    align-items: center;
-    padding: 16px 20px;
+  50% {
+    transform: scale(1.02);
+    box-shadow: 0 16px 40px rgba(79, 70, 229, 0.45);
   }
-
-  .tool-nav {
-    grid-auto-flow: column;
-    grid-auto-columns: minmax(110px, auto);
-    justify-content: end;
-  }
-
-  .main {
-    padding: 24px;
+  100% {
+    transform: scale(1);
+    box-shadow: 0 12px 30px rgba(79, 70, 229, 0.3);
   }
 }
 
 @media (max-width: 640px) {
-  .sidebar {
-    grid-template-columns: 1fr;
-    padding: 14px 16px;
+  .welcome-message {
+    padding: calc(var(--spacing-unit) * 4);
+    border-radius: 16px;
   }
-
-  .tool-nav {
-    grid-auto-flow: row;
+  .welcome-message h1 {
+    font-size: 2.5rem;
   }
-
-  .tool-header {
+  .welcome-actions {
     flex-direction: column;
-    align-items: flex-start;
+    gap: var(--spacing-unit);
   }
-
-  .tool-footer {
-    position: static;
-    padding: 0;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  * {
-    scroll-behavior: auto;
-    transition: none !important;
-    animation: none !important;
+  .welcome-actions .btn {
+    width: 100%;
   }
 }
